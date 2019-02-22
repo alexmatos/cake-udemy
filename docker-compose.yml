@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  dev:
+    image: webdevops/php-apache-dev:7.1
+    volumes:
+      - .:/app
+      - "./docker/php.ini:/usr/local/etc/php/php.ini"
+    ports:
+      - 8070:80
+    links:
+      - db
+    restart: always
+    networks:
+      - rede-cake
+
+  db:
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: myDb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: test
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+      - ./persistent:/var/lib/mysql
+    networks:
+      - rede-cake
+
+networks:
+  rede-cake:
+    driver: bridge
