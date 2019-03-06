@@ -28,10 +28,26 @@ class UsersTable extends Table
             ->allowEmptyString('name', false);
 
         $validator
-            ->requirePresence('name', 'create')
-            ->allowEmptyString('name', false);
+            ->requirePresence('email', 'create')
+            ->allowEmptyString('email', false);
 
+        $validator
+            ->requirePresence('username', 'create')
+            ->allowEmptyString('username', false);
+
+        $validator
+            ->requirePresence('password', 'create')
+            ->allowEmptyString('password', false);
 
         return $validator;
     }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email'], 'E-mail já cadastrado'));
+        $rules->add($rules->isUnique(['username'], 'Usuário já cadastrado'));
+
+        return $rules;
+    }
+
 }

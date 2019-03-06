@@ -15,7 +15,7 @@ class UsersController extends AppController
     public function index ()
     {
         $this->paginate = [
-            'limit' => 1,
+            'limit' => 3,
             'order' => [
                 'Users.id' => 'desc'
             ]
@@ -49,4 +49,33 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+    public function edit($id = null)
+    {
+        $user = $this->Users->get($id);
+
+        if($this->request->is(['post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if($this->Users->save($user)) {
+                $this->Flash->success('Usuário editado com sucesso!');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('Erro ao editar usuário!');
+            }
+        }
+
+        $this->set(compact('user'));
+    }
+
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post', 'delete']);
+        $user = $this->Users->get($id);
+
+        if($this->Users->delete($user)) {
+            $this->Flash->success('Usuário apagado com sucesso');
+        } else {
+            $this->Flash->error('Erro ao apagar usuário');
+        }
+        return $this->redirect(['action' => 'index']);
+    }
 }

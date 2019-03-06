@@ -16,8 +16,10 @@
                 <td><?= $usuario->name ?></td>
                 <td><?= $usuario->email ?></td>
                 <td>
-                    <?= $this->Html->link(('Ver'), ['action' => 'view', $usuario->id]) ?>
-                    Editar Apagar
+                    <?= $this->Html->link(('Ver '), ['action' => 'view', $usuario->id]) ?>
+                    <?= $this->Html->link((' Editar '), ['action' => 'edit', $usuario->id]) ?>
+                    <?= $this->Form->postLink((' Apagar'), ['action' => 'delete', $usuario->id],
+                        ['confirm' => 'Deseja realmente apagar o usuário?', $usuario->id]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
