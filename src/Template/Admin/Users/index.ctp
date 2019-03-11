@@ -1,3 +1,5 @@
+<?= $this->Html->link(__('Sair'), ['action' => 'logout']) ?>
+
 <div class="users index large-12 medium-12 columns content">
     <h3><?= 'Lista de Usuários' ?></h3>
     <table>
